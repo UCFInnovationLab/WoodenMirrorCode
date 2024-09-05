@@ -1,0 +1,4 @@
+"./main.obj"
+"./ws2812.obj"
+"../lnk_msp430g2233.cmd"
+-llibc.a

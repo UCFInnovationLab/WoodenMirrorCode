@@ -1,0 +1,21 @@
+
+**** Build of configuration Debug for project msp430g2xx3_1_vlo.c ****
+
+"C:\\ti\\ccs1280\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+Building file: "../msp430g2xx3_1_vlo.c"
+Invoking: MSP430 Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmsp --use_hw_mpy=none --include_path="C:/ti/ccs1280/ccs/ccs_base/msp430/include" --include_path="C:/Users/Owner/workspace_v12/msp430g2xx3_1_vlo.c" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --advice:power=all --define=__MSP430G2553__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --preproc_with_compile --preproc_dependency="msp430g2xx3_1_vlo.d_raw"  "../msp430g2xx3_1_vlo.c"
+"../msp430g2xx3_1_vlo.c", line 84: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+"../msp430g2xx3_1_vlo.c", line 86: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+Finished building: "../msp430g2xx3_1_vlo.c"
+ 
+Building target: "msp430g2xx3_1_vlo.c.out"
+Invoking: MSP430 Linker
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmsp --use_hw_mpy=none --advice:power=all --define=__MSP430G2553__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number -z -m"msp430g2xx3_1_vlo.c.map" --heap_size=80 --stack_size=80 -i"C:/ti/ccs1280/ccs/ccs_base/msp430/include" -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/lib" -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="msp430g2xx3_1_vlo.c_linkInfo.xml" --use_hw_mpy=none --rom_model -o "msp430g2xx3_1_vlo.c.out" "./msp430g2xx3_1_vlo.obj" "../lnk_msp430g2553.cmd"  -llibc.a 
+<Linking>
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 3 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+Finished building target: "msp430g2xx3_1_vlo.c.out"
+ 
+
+**** Build Finished ****

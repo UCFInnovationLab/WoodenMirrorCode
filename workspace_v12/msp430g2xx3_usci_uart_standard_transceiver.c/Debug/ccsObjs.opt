@@ -1,0 +1,4 @@
+"./msp430g2xx3_usci_uart_standard_transceiver.obj"
+"./ws2812.obj"
+"../lnk_msp430g2553.cmd"
+-llibc.a
