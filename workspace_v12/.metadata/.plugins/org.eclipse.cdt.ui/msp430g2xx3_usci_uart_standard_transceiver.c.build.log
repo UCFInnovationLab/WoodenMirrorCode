@@ -1,8 +1,0 @@
-
-**** Build of configuration Debug for project msp430g2xx3_usci_uart_standard_transceiver.c ****
-
-"C:\\ti\\ccs1280\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
- 
-gmake[1]: 'msp430g2xx3_usci_uart_standard_transceiver.c.out' is up to date.
-
-**** Build Finished ****
