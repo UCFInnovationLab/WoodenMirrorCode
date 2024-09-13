@@ -111,9 +111,9 @@ void initServo()
 void initTimerA1()
 {
     TA1CCTL1 = OUTMOD_7;
-    TA1CCR0 = 65535; //counts till 16000 (1 millisecond)
+    TA1CCR0 = 16000; //counts till 16000 (1 millisecond)
     TA1CCR1 = 1000;
-    TA1CTL = (TASSEL_2 | MC_3 | ID_3); //continuous mode
+    TA1CTL = (TASSEL_2 | MC_2 | ID_3); //continuous mode
 
 }
 
@@ -203,9 +203,10 @@ void main()
 
       timer = TA1R;
 
+      int i =0;
       P2OUT ^= BIT1;
-      __delay_cycles(65535);
-
+      for(i = 0; i < 100000; i++);
+//
 //      P2OUT |= BIT1; //led on
 //      delay();
 //      P2OUT &= ~BIT1; //led off

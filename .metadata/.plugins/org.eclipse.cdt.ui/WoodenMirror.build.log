@@ -14,6 +14,7 @@ Invoking: MSP430 Compiler
 "../main.c", line 154: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
 "../main.c", line 160: remark #1544-D: (ULP 13.1) Detected loop counting up. Recommend loops count down as detecting zeros is easier
 "../main.c", line 163: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../main.c", line 207: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
 "../main.c", line 262: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
 "../main.c", line 267: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
 "../main.c", line 262: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas

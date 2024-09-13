@@ -204,8 +204,7 @@ void main()
       timer = TA1R;
 
       P2OUT ^= BIT1;
-      __delay_cycles(65535);
-
+      __delay_cycles(160000);
 //      P2OUT |= BIT1; //led on
 //      delay();
 //      P2OUT &= ~BIT1; //led off

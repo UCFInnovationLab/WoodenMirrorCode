@@ -205,7 +205,6 @@ void main()
 
       P2OUT ^= BIT1;
       __delay_cycles(65535);
-
 //      P2OUT |= BIT1; //led on
 //      delay();
 //      P2OUT &= ~BIT1; //led off
