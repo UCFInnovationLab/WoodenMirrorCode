@@ -26,6 +26,8 @@ volatile uint8_t reset = 1;
 volatile uint8_t stored_byte = 0; // Store the received byte
 volatile uint8_t i = 0;
 
+volatile uint16_t timer = 0;
+
 void initUART()
 {
 #if UART_MODE == SMCLK_115200
@@ -86,6 +88,9 @@ void initGPIO()
 
     P2DIR |= BIT0;              // Set P2.0 as output
     P2OUT &= ~BIT0;             // Set P2.0 to low (0V) to turn on the LED
+
+    P2DIR |= BIT1;
+    P2OUT &= ~BIT1;
 }
 
 
@@ -106,9 +111,9 @@ void initServo()
 void initTimerA1()
 {
     TA1CCTL1 = OUTMOD_7;
-    TA1CCR0 = 2000;
+    TA1CCR0 = 16000; //counts till 16000 (1 millisecond)
     TA1CCR1 = 1000;
-    TA1CTL = (TASSEL_2 | MC_1 | ID_3);
+    TA1CTL = (TASSEL_2 | MC_2 | ID_3); //continuous mode
 
 }
 
@@ -146,7 +151,7 @@ void moveServo(uint8_t data)
 void delay(void)
 {
     volatile unsigned int i;
-    for (i = 10000000; i > 0; i--);  // Adjust value for desired blink rate
+    for (i = 0; i < 16000; i++);  // Adjust value for desired blink rate
 }
 
 
@@ -165,8 +170,8 @@ void gradualFill(u_int n, u_char r, u_char g, u_char b){
 
 void main()
 {
-//    WDTCTL = WDTPW + WDTHOLD;                 // Stop WDT
-    WDTCTL    = WDTPW | WDTHOLD;   // Stop watchdog timer
+    WDTCTL = WDTPW + WDTHOLD;                 // Stop WDT
+//    WDTCTL    = WDTPW | WDTHOLD;   // Stop watchdog timer
 
     initClock();
     initGPIO();
@@ -174,14 +179,19 @@ void main()
     initTimerA1();
     initServo();
     initStrip();
-    fillStrip(0x00, 0xFF, 0x00);
+    fillStrip(0x00, 0x00, 0x17);
 
 
-  __bis_SR_register(GIE);       // Since SMCLK is source, enter LPM0, interrupts enabled
+
+//    __bis_SR_register(GIE | OSCOFF);       // interrupt enabled
+
+     __bis_SR_register(GIE);       // interrupt enabled
 
 
-  while( 1 )                     // Endless-loop (main-program)
+  while(1)                     // Endless-loop (main-program)
   {
+
+
 //      gradualFill(NUM_LEDS, 0x00, 0xFF, 0x00);  // green
 //      gradualFill(NUM_LEDS, 0x00, 0x00, 0xFF);  // blue
 //      gradualFill(NUM_LEDS, 0xFF, 0x00, 0xFF);  // magenta
@@ -190,26 +200,38 @@ void main()
 //      gradualFill(NUM_LEDS, 0xFF, 0x00, 0x00);  // red
 
 
-      int timer = 0;
-      int timer2 = 0;
 
       timer = TA1R;
 
-      int i;
-      for (i = 0; i < 20000; i++);
+      P2OUT ^= BIT1;
+//
+//      P2OUT |= BIT1; //led on
+//      delay();
+//      P2OUT &= ~BIT1; //led off
+//      delay();
 
-      timer2 = TA1R;
-      if (timer > 65000 && timer2 > 65000)
-      {
-          TA1R = 0;                       // Reset Timer A1 counter
+      //when timer is reset and another byte is sent, that is sent to next board.
 
-          int i = 0;
-          for (i = 0; i < 1000000; i++)
-          {
-              P2OUT ^= BIT0;          // Toggle P2.0 (LED on/off)
-              delay();
-          }
-      }
+//      if (timer > 16000)    //if timer greater than one millisecond, reset timer
+//      {
+//          TA1R = 0;                       // Reset Timer A1 counter
+//
+//
+//
+//          int i = 0;
+//          for (i = 0; i < 1000000; i++)
+//          {
+//              P2OUT ^= BIT0;          // Toggle P2.0 (LED on/off)
+////              delay();
+//          }
+//          fillStrip(0xFF,0x00,0x00);
+//
+//      } //else goes to interrupt
+//      else
+//      {
+//          P2OUT &= ~BIT0;          // Toggle P2.0 (LED on/off)
+//          fillStrip(0x00, 0xFF, 0x00);
+//      }
 
 
   }
@@ -234,37 +256,29 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
 
         uint8_t rx_val = UCA0RXBUF;     // Read the received byte (clears interrupt flag)
 
-        if (reset == 1)
+        if (TA1R == 0)                  //if timer is reset
         {
             stored_byte = rx_val;           // Store received byte
             moveServo(stored_byte);              // Move the servo to the new position
 
-
-            reset = 0;
         }
         else
         {
-
             UART_SendChar((char)rx_val);
 
         }
-//
-//        // Reset the timer for handling timeouts if needed
-//        TA0R = 0;                       // Reset Timer A counter
-//
-//        reset = 1;                      // Set reset flag to indicate a new byte was received
-//
-//        if (reset == 1)
+
+//        int i = 0;
+//        for (i = 0; i < 1000000; i++)
 //        {
-//                // If reset flag is set, reset the servo position after timeout
-//                TA0CCR1 = 4000;  // Reset servo to original position (mid-point)
-//
-//                reset = 0;       // Clear the reset flag
-//         }
-//
-//        __enable_interrupt();             // Re-enable global interrupts
+//            P2OUT ^= BIT0;          // Toggle P2.0 (LED on/off)
+//            delay();
+//        }
+
 
     }
+
+    __bic_SR_register_on_exit(GIE);
 }
 
 

@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="rx_val"/>
+		<item key="selection" value="LPM"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="rx_val"/>
-			<item value="servo_min"/>
-			<item value="TA0CCR"/>
-			<item value="TA0"/>
-			<item value="TA1"/>
-			<item value="delay"/>
-			<item value="bcsctl"/>
-			<item value="ifg"/>
-			<item value="volatile"/>
+			<item value="lpm"/>
+			<item value="wdtssel"/>
+			<item value="tar"/>
+			<item value="P1"/>
+			<item value="timer1_a3"/>
+			<item value="timer2_a3"/>
+			<item value="timer0_a3"/>
+			<item value="timer1_A3"/>
+			<item value="timer1"/>
+			<item value="timer0"/>
+			<item value="timer B"/>
+			<item value="tb"/>
+			<item value="Timer0_B"/>
+			<item value="Timer0_A"/>
+			<item value="timer_A"/>
 		</list>
 		<list key="replacehistory">
 		</list>
