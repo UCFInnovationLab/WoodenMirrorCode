@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="LPM"/>
+		<item key="selection" value="receive"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="lpm"/>
-			<item value="wdtssel"/>
-			<item value="tar"/>
-			<item value="P1"/>
-			<item value="timer1_a3"/>
-			<item value="timer2_a3"/>
-			<item value="timer0_a3"/>
-			<item value="timer1_A3"/>
-			<item value="timer1"/>
-			<item value="timer0"/>
-			<item value="timer B"/>
-			<item value="tb"/>
-			<item value="Timer0_B"/>
-			<item value="Timer0_A"/>
-			<item value="timer_A"/>
+			<item value="receive"/>
+			<item value="p1out"/>
+			<item value="p2"/>
+			<item value="pin2"/>
+			<item value="bit5"/>
+			<item value="bit1"/>
+			<item value="reset"/>
+			<item value="p1sel"/>
+			<item value="p2Out"/>
+			<item value="mc_3"/>
+			<item value="outmod"/>
+			<item value="ta1ccr1"/>
+			<item value="mc"/>
+			<item value="mc_"/>
+			<item value="up "/>
 		</list>
 		<list key="replacehistory">
 		</list>
@@ -32,6 +32,6 @@
 		<item key="DIALOG_Y_ORIGIN" value="338"/>
 		<item key="DIALOG_WIDTH" value="412"/>
 		<item key="DIALOG_HEIGHT" value="436"/>
-		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-30|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
+		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-30|0|0|0|400|0|0|0|1|0|0|5|0|Segoe UI"/>
 	</section>
 </section>

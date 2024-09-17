@@ -7,18 +7,15 @@ Building file: "../main.c"
 Invoking: MSP430 Compiler
 "C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmsp --use_hw_mpy=none --include_path="C:/ti/ccs1280/ccs/ccs_base/msp430/include" --include_path="C:/Users/Owner/Documents/GitHub/WoodenMirrorCode/WoodenMirror" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --advice:power=all --define=__MSP430G2233__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
 "../main.c", line 70: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
-"../main.c", line 121: remark #1528-D: (ULP 3.1) Detected flag polling using IFG2. Recommend using an interrupt combined with enter LPMx and ISR
 "../main.c", line 126: remark #1528-D: (ULP 3.1) Detected flag polling using IFG2. Recommend using an interrupt combined with enter LPMx and ISR
-"../main.c", line 138: remark #1533-D: (ULP 6.1) Detected use of multiplication on a device that has no hardware multiplier
-"../main.c", line 154: remark #1544-D: (ULP 13.1) Detected loop counting up. Recommend loops count down as detecting zeros is easier
-"../main.c", line 154: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
-"../main.c", line 160: remark #1544-D: (ULP 13.1) Detected loop counting up. Recommend loops count down as detecting zeros is easier
-"../main.c", line 163: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
-"../main.c", line 207: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
-"../main.c", line 262: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
-"../main.c", line 267: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
-"../main.c", line 262: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
-"../main.c", line 267: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 131: remark #1528-D: (ULP 3.1) Detected flag polling using IFG2. Recommend using an interrupt combined with enter LPMx and ISR
+"../main.c", line 143: remark #1533-D: (ULP 6.1) Detected use of multiplication on a device that has no hardware multiplier
+"../main.c", line 159: remark #1544-D: (ULP 13.1) Detected loop counting up. Recommend loops count down as detecting zeros is easier
+"../main.c", line 159: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+"../main.c", line 165: remark #1544-D: (ULP 13.1) Detected loop counting up. Recommend loops count down as detecting zeros is easier
+"../main.c", line 168: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../main.c", line 270: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 270: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
 Finished building: "../main.c"
  
 Building target: "WoodenMirror.out"
