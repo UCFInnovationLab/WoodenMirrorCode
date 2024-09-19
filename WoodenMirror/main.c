@@ -220,7 +220,7 @@ void main()
 
       //when timer is reset and another byte is sent, that is sent to next board.
 
-      if (timer > 4000)    //if timer greater than one millisecond, reset timer
+      if (timer > 4000)    //if timer greater than one millisecond = 4000, reset timer
       {
 
           timer = TA1R;
@@ -230,13 +230,15 @@ void main()
           P1OUT = BIT4;
 
 //          P2OUT &= ~BIT4; //toggle led
-          P2OUT = BIT0;
+          P2OUT ^= BIT0;
+
 
 
       } //else goes to interrupt
       else
       {
           P2OUT &= ~BIT0;          // Toggle P2.0 (LED on/off)
+
       }
 
 
@@ -271,29 +273,40 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
 
 //            P2OUT = BIT4;
 
+            fillStrip(0x17,0x17,0x00);
+
+            if (stored_byte == 0x01)
+            {
+                fillStrip(0x00,0x00,0x20);
+            }
+            else if (stored_byte == 0x02)
+            {
+                fillStrip(0x20,0x00,0x00);
+            }
+            else if (stored_byte == 0x03)
+            {
+                fillStrip(0x00,0x20,0x00);
+            }
+
+
             reset = 0;
             P1OUT &= ~BIT4;
 
         }
         else
         {
-//            UART_SendChar((char)rx_val);
+            UART_SendChar((char)rx_val);
+            fillStrip(0x00,0x17,0x17);
 
         }
         TA1R = 0;
 
 
-//        int i = 0;
-//        for (i = 0; i < 1000000; i++)
-//        {
-//            P2OUT ^= BIT0;          // Toggle P2.0 (LED on/off)
-//            delay();
-//        }
+
 
 
     }
 
-//    __bic_SR_register_on_exit(GIE);
 }
 
 

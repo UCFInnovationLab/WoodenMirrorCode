@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="receive"/>
+		<item key="selection" value="convert"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="convert"/>
+			<item value="convertChar"/>
+			<item value="reset = 1"/>
+			<item value="disable"/>
+			<item value="wdtifg"/>
+			<item value="rstifg"/>
+			<item value="uca0tx"/>
 			<item value="receive"/>
 			<item value="p1out"/>
 			<item value="p2"/>
@@ -16,13 +23,6 @@
 			<item value="bit1"/>
 			<item value="reset"/>
 			<item value="p1sel"/>
-			<item value="p2Out"/>
-			<item value="mc_3"/>
-			<item value="outmod"/>
-			<item value="ta1ccr1"/>
-			<item value="mc"/>
-			<item value="mc_"/>
-			<item value="up "/>
 		</list>
 		<list key="replacehistory">
 		</list>
@@ -32,6 +32,6 @@
 		<item key="DIALOG_Y_ORIGIN" value="338"/>
 		<item key="DIALOG_WIDTH" value="412"/>
 		<item key="DIALOG_HEIGHT" value="436"/>
-		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-30|0|0|0|400|0|0|0|1|0|0|5|0|Segoe UI"/>
+		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-30|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
 	</section>
 </section>
