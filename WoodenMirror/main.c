@@ -19,6 +19,11 @@
 
 #define UART_MODE       SMCLK_115200
 
+#define ModeIn0 BIT4
+#define ModeIn1 BIT5
+#define ModeOut0 BIT4
+#define ModeOut1 BIT5
+
 #define RESET_TIMEOUT 32768     // Timeout value for resetting (1 second at 32kHz ACLK)
 
 
@@ -27,6 +32,7 @@ volatile uint8_t stored_byte = 0; // Store the received byte
 volatile uint8_t i = 0;
 
 volatile uint16_t timer = 0;
+volatile bool timerA1_done = false;
 
 void initUART()
 {
@@ -75,28 +81,32 @@ void initClock()
 
 //    BCSCTL2 = DIVS_1;  // SMCLK = DCO / 2 = 8MHz
 
+    // Enable ACLK to source from VLO (12 kHz internal oscillator)
+    BCSCTL3 |= LFXT1S_2;       // Set ACLK = VLOCLK (internal 12kHz)
+
 }
 
 void initGPIO()
 {
-    P1SEL = BIT1 + BIT2;                      // P1.1 = RXD, P1.2=TXD
+    P1SEL = BIT1 + BIT2;        // P1.1 = RXD, P1.2=TXD
     P1SEL2 = BIT1 + BIT2;
 
-    P1SEL &= ~(BIT0 + BIT6);                  // Clear selection for P1.0 and P1.6
-    P1DIR |= BIT0 + BIT6;                    // Set P1.0 and P1.6 as outputs (LEDs)
-    P1OUT &= ~(BIT0 + BIT6);                 // Initialize LEDs to be off
-
-    P2DIR |= BIT0;              // Set P2.0 as output
+    P2DIR |= BIT0;              // Red LED: P2.0, output
     P2OUT &= ~BIT0;             // Set P2.0 to low (0V) to turn on the LED
 
-    P1DIR |= BIT4;
+    P1DIR |= BIT4;              // ModeOut0: P1.4, output
     P1OUT &= ~BIT4;
 
-    P2DIR |= BIT4;
-    P2OUT &= ~BIT4;
+    P1DIR |= BIT5;              // ModeOut1: P1.5, output
+    P1OUT &= ~BIT5;
 
-    P2DIR |= BIT1;
-    P2OUT &= ~BIT1;
+    P2DIR &= ~BIT4;             // ModeIn0: P2.4, input
+    P2REN |= BIT4;              // Enable resistor on P2.4 (pull-up or pull-down)
+    P2OUT |= BIT4;              // Set P1.3 output high to select pull-up resistor
+
+    P2DIR &= ~BIT5;             // ModeIn0: P2.5, input
+    P2REN |= BIT5;              // Enable resistor on P2.5 (pull-up or pull-down)
+    P2OUT |= BIT5;              // Set P2.5 output high to select pull-up resistor
 }
 
 
@@ -108,17 +118,21 @@ void initServo()
     TA0CTL    = (TASSEL_2 | MC_3 | ID_2); // SMCLK, timer in up-mode, divide by 4
 
 
-    P1DIR    |=  0x40;             // Set P1.6 to output-direction
-    P1SEL    |=  0x40;             // Set selection register 1 for timer-function
-    P1SEL2   &= ~0x40;             // Clear selection register 2 for timer-function (not needed, as it is 0 after startup)
+    P1DIR    |=  BIT6;             // Set P1.6 to output-direction
+    P1SEL    |=  BIT6;             // Set selection register 1 for timer-function
+    P1SEL2   &= ~BIT6;             // Clear selection register 2 for timer-function (not needed, as it is 0 after startup)
 }
 
 void initTimerA1()
 {
-    TA1CCTL1 = OUTMOD_7;
-    TA1CCR0 = 65535; //counts till 16000 (1 millisecond)
-    TA1CCR1 = 1000;
-    TA1CTL = (TASSEL_2 | MC_3 | ID_3); //continuous mode
+    // Set the clock source and divider for Timer_A1
+    TA1CTL = TASSEL_1 | ID_0 | MC_1 | TACLR; // ACLK, Up mode, divide by 1, Clear timer
+
+    // Set the value for the TA1CCR0 register (period of the timer)
+    TA1CCR0 = 12000 - 1;        // Set Timer_A to count to 12000 (1 sec if ACLK set to 12kHz)
+
+    // Enable interrupt for CCR0
+    TA1CCTL0 = CCIE;            // Enable interrupt for CCR0
 
 }
 
@@ -169,6 +183,55 @@ void gradualFill(u_int n, u_char r, u_char g, u_char b){
     }
 }
 
+doMode00() {
+    timer = TA1R;
+
+    // Transfer mode to next node
+    P1OUT &= ~ModeOut0;
+    P1OUT &= ~ModeOut1;
+
+    //when timer is reset and another byte is sent, that is sent to next board.
+    if (timer > 4000)    //if timer greater than one millisecond = 4000, reset timer
+    {
+
+      timer = TA1R;
+      TA1R = 0;
+
+      reset = 1; //true
+      P1OUT = BIT4;
+
+    //          P2OUT &= ~BIT4; // light led
+      P2OUT ^= BIT0;    // toggle led
+    } //else goes to interrupt
+    else
+    {
+      P2OUT &= ~BIT0;          // Toggle P2.0 (LED on/off)
+    }
+}
+
+doMode01() {
+    // Transfer mode to next node
+    P1OUT |= ModeOut0;
+    P1OUT &= ~ModeOut1;
+}
+
+doMode10() {
+    // Transfer mode to next node
+    P1OUT &= ~ModeOut0;
+    P1OUT |= ModeOut1;
+}
+
+doMode11() {
+    // Transfer mode to next node
+    P1OUT |= ModeOut0;
+    P1OUT |= ModeOut1;
+
+    if (timerA1_done) {
+        P2OUT ^= BIT0;             // Toggle LED
+        timerA1_done=false;
+    }
+}
+
 //******************************************************************************
 // Main ************************************************************************
 //******************************************************************************
@@ -176,7 +239,7 @@ void gradualFill(u_int n, u_char r, u_char g, u_char b){
 void main()
 {
     WDTCTL = WDTPW + WDTHOLD;                 // Stop WDT
-//    WDTCTL    = WDTPW | WDTHOLD;   // Stop watchdog timer
+    //    WDTCTL    = WDTPW | WDTHOLD;   // Stop watchdog timer
 
     initClock();
     initGPIO();
@@ -184,66 +247,24 @@ void main()
     initTimerA1();
     initServo();
     initStrip();
+
     fillStrip(0x00, 0x00, 0x17);
 
+    __bis_SR_register(GIE);       // interrupt enabled
 
-
-//    __bis_SR_register(GIE | OSCOFF);       // interrupt enabled
-
-     __bis_SR_register(GIE);       // interrupt enabled
-
-
-
-  while(1)                     // Endless-loop (main-program)
-  {
-
-      timer = TA1R;
-
-//      gradualFill(NUM_LEDS, 0x00, 0xFF, 0x00);  // green
-//      gradualFill(NUM_LEDS, 0x00, 0x00, 0xFF);  // blue
-//      gradualFill(NUM_LEDS, 0xFF, 0x00, 0xFF);  // magenta
-//      gradualFill(NUM_LEDS, 0x17, 0x17, 0x00);  // yellow
-//      gradualFill(NUM_LEDS, 0x00, 0xFF, 0xFF);  // cyan
-//      gradualFill(NUM_LEDS, 0xFF, 0x00, 0x00);  // red
-
-
-//      P2OUT ^= BIT1; //toggle led
-//      __delay_cycles(30000);p1out
-
-
-//      P2OUT |= BIT1; //led on
-//      delay();
-//      delay();
-
-
-
-
-      //when timer is reset and another byte is sent, that is sent to next board.
-
-      if (timer > 4000)    //if timer greater than one millisecond = 4000, reset timer
-      {
-
-          timer = TA1R;
-          TA1R = 0;
-
-          reset = 1; //true
-          P1OUT = BIT4;
-
-//          P2OUT &= ~BIT4; //toggle led
-          P2OUT ^= BIT0;
-
-
-
-      } //else goes to interrupt
-      else
-      {
-          P2OUT &= ~BIT0;          // Toggle P2.0 (LED on/off)
-
+    while(1)                     // Endless-loop (main-program)
+    {
+      // Mode 00
+      if (!(P2IN & ModeIn0) && !(P2IN & ModeIn1)) {
+          doMode00();
+      } else if (!(P2IN & ModeIn0) && (P2IN & ModeIn1)) {
+          doMode01();
+      } else if ((P2IN & ModeIn0) && !(P2IN & ModeIn1)) {
+          doMode10();
+      } else if ((P2IN & ModeIn0) && (P2IN & ModeIn1)) {
+          doMode11();
       }
-
-
-  }
-
+    }
 }
 
 //******************************************************************************
@@ -261,17 +282,12 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
 {
     if (IFG2 & UCA0RXIFG)
     {
-        P2OUT ^= BIT4;
-
-
         uint8_t rx_val = UCA0RXBUF;     // Read the received byte (clears interrupt flag)
 
         if (reset == 1)                  //if timer is reset
         {
             stored_byte = rx_val;           // Store received byte
             moveServo(stored_byte);              // Move the servo to the new position
-
-//            P2OUT = BIT4;
 
             fillStrip(0x17,0x17,0x00);
 
@@ -290,8 +306,6 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
 
 
             reset = 0;
-            P1OUT &= ~BIT4;
-
         }
         else
         {
@@ -300,13 +314,26 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
 
         }
         TA1R = 0;
-
-
-
-
-
     }
-
 }
+
+// Timer1_A1 interrupt service routine
+#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
+#pragma vector=TIMER1_A0_VECTOR
+__interrupt void Timer_A0_ISR(void)
+#elif defined(__GNUC__)
+void __attribute__ ((interrupt(TIMER1_A0_VECTOR))) Timer_A0_ISR (void)
+#else
+#error Compiler not supported!
+#endif
+{
+    // Code to handle the interrupt
+    timerA1_done = true;
+}
+
+
+
+
+
 
 
