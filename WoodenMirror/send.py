@@ -15,17 +15,43 @@ else:
     print("Opening serial port...")
     ser.open()
 
+def red():
+	ser.write(b'\x00')  # RED
+	time.sleep(.01)
+	
+def green():
+	ser.write(b'\x01')  # 
+	time.sleep(.01)
+
+def blue():
+	ser.write(b'\x02')  # BLUE
+	time.sleep(.01)
+
 # Function to send characters
 def send_characters(data):
     ser.write(data.encode())    # Encode the string into bytes and send it through the serial port
     print(f"Sent: {data}")
 
 try:
-    while True:
-        ser.write(b'A')
-        time.sleep(.01)
-        ser.write(b'B')
-        time.sleep(.01)
+	while True:
+		red()
+		green()
+		blue()
+        
+		time.sleep(1);
+        
+		blue()
+		red()
+		green()
+        
+		time.sleep(1);
+        
+		green()
+		blue()
+		red()
+		
+		time.sleep(1);
+
         
 except KeyboardInterrupt:
     print("Program interrupted by the user.")

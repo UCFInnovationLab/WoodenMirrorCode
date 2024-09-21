@@ -186,29 +186,20 @@ void gradualFill(u_int n, u_char r, u_char g, u_char b){
 }
 
 doMode00() {
-    timer = TA1R;
-
     // Transfer mode to next node
     P1OUT &= ~ModeOut0;
     P1OUT &= ~ModeOut1;
 
-    //when timer is reset and another byte is sent, that is sent to next board.
-    if (timerA1_done)    //if timer greater than one millisecond = 4000, reset timer
+    //if timer reaches threshhold, set reset true so we can capture next byte
+    if (timerA1_done)
     {
-
       timerA1_done = false;
-      timer = TA1R;
-
       reset = 1; //true
-      P1OUT = BIT4;
-
-    //          P2OUT &= ~BIT4; // light led
-      P2OUT ^= BIT0;    // toggle led
-    } //else goes to interrupt
-    else
-    {
-      P2OUT &= ~BIT0;          // Toggle P2.0 (LED on/off)
     }
+
+    // Make led follow reset
+    if (reset) P2OUT |= BIT0;
+    else P2OUT &= ~BIT0;
 }
 
 doMode01() {
@@ -228,21 +219,10 @@ doMode11() {
     P1OUT |= ModeOut0;
     P1OUT |= ModeOut1;
 
-    if (timerA1_done > 4000)
-    {
-//        mode11Count++;
-
+    if (timerA1_done) {
         P2OUT ^= BIT0;             // Toggle LED
         timerA1_done=false;
     }
-//    if (mode11Count == 10)
-//    {
-//        mode11Count = 0;
-//    }
-
-
-
-
 }
 
 //******************************************************************************
@@ -303,25 +283,24 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
             stored_byte = rx_val;           // Store received byte
             moveServo(stored_byte);              // Move the servo to the new position
 
-            if (stored_byte == 'A')
+            if (stored_byte == 0x00)
             {
-                fillStrip(0x00,0x00,0x20);
+                fillStrip(0x20,0x00,0x00);  // red
             }
-            else if (stored_byte == 'B')
+            else if (stored_byte == 0x01)
             {
-                fillStrip(0x20,0x00,0x00);
+                fillStrip(0x00,0x20,0x00);  // green
+            }
+            else if (stored_byte == 0x02)
+            {
+                fillStrip(0x00,0x00,0x20);  // blue
             }
             else if (stored_byte == 0x03)
-            {
-                fillStrip(0x00,0x20,0x00);
-            }
-            else if (stored_byte == 0xFF)
             {
                 fillStrip(0x20,0x20,0x20);
             }
 
             reset = 0;
-            P2OUT |= BIT0;
         }
         else
         {
