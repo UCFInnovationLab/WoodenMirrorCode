@@ -333,7 +333,7 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
             fillStrip(0x00,0x17,0x17);
 
             P2OUT |= BIT0;
-            __delay_cycles(100000);
+            __delay_cycles(1000);
         }
         TA1R = 0;
     }

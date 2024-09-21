@@ -228,17 +228,17 @@ doMode11() {
     P1OUT |= ModeOut0;
     P1OUT |= ModeOut1;
 
-    if (timerA1_done > 4000)
+    if (timerA1_done)
     {
-//        mode11Count++;
+        mode11Count++;
 
         P2OUT ^= BIT0;             // Toggle LED
         timerA1_done=false;
     }
-//    if (mode11Count == 10)
-//    {
-//        mode11Count = 0;
-//    }
+    if (mode11Count == 10)
+    {
+        mode11Count = 0;
+    }
 
 
 
@@ -260,7 +260,6 @@ void main()
     initTimerA1();
     initServo();
     initStrip();
-
 
     fillStrip(0x00, 0x00, 0x17);
 
@@ -305,8 +304,6 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
 
             fillStrip(0x17,0x17,0x00);
 
-            P2OUT &= ~BIT0;
-
             if (stored_byte == 0x01)
             {
                 fillStrip(0x00,0x00,0x20);
@@ -332,8 +329,6 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
             UART_SendChar((char)rx_val);
             fillStrip(0x00,0x17,0x17);
 
-            P2OUT |= BIT0;
-            __delay_cycles(100000);
         }
         TA1R = 0;
     }
@@ -351,8 +346,6 @@ void __attribute__ ((interrupt(TIMER1_A0_VECTOR))) Timer_A0_ISR (void)
 {
     // Code to handle the interrupt
     timerA1_done = true;
-//    TA1CCTL0 &= ~CCIFG;  // Clear the interrupt flag
-
 }
 
 

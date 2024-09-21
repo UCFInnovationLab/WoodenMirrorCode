@@ -34,8 +34,6 @@ volatile uint8_t i = 0;
 volatile uint16_t timer = 0;
 volatile bool timerA1_done = false;
 
-volatile int mode11Count = 0;
-
 void initUART()
 {
 #if UART_MODE == SMCLK_115200
@@ -106,7 +104,7 @@ void initGPIO()
     P2REN |= BIT4;              // Enable resistor on P2.4 (pull-up or pull-down)
     P2OUT |= BIT4;              // Set P1.3 output high to select pull-up resistor
 
-    P2DIR &= ~BIT5;             // ModeIn1: P2.5, input
+    P2DIR &= ~BIT5;             // ModeIn0: P2.5, input
     P2REN |= BIT5;              // Enable resistor on P2.5 (pull-up or pull-down)
     P2OUT |= BIT5;              // Set P2.5 output high to select pull-up resistor
 }
@@ -131,7 +129,7 @@ void initTimerA1()
     TA1CTL = TASSEL_1 | ID_0 | MC_1 | TACLR; // ACLK, Up mode, divide by 1, Clear timer
 
     // Set the value for the TA1CCR0 register (period of the timer)
-    TA1CCR0 = 1200 - 1;        // Set Timer_A to count to 12000 (1 sec if ACLK set to 12kHz)
+    TA1CCR0 = 12000 - 1;        // Set Timer_A to count to 12000 (1 sec if ACLK set to 12kHz)
 
     // Enable interrupt for CCR0
     TA1CCTL0 = CCIE;            // Enable interrupt for CCR0
@@ -193,11 +191,11 @@ doMode00() {
     P1OUT &= ~ModeOut1;
 
     //when timer is reset and another byte is sent, that is sent to next board.
-    if (timerA1_done)    //if timer greater than one millisecond = 4000, reset timer
+    if (timer > 4000)    //if timer greater than one millisecond = 4000, reset timer
     {
 
-      timerA1_done = false;
       timer = TA1R;
+      TA1R = 0;
 
       reset = 1; //true
       P1OUT = BIT4;
@@ -228,21 +226,10 @@ doMode11() {
     P1OUT |= ModeOut0;
     P1OUT |= ModeOut1;
 
-    if (timerA1_done > 4000)
-    {
-//        mode11Count++;
-
+    if (timerA1_done) {
         P2OUT ^= BIT0;             // Toggle LED
         timerA1_done=false;
     }
-//    if (mode11Count == 10)
-//    {
-//        mode11Count = 0;
-//    }
-
-
-
-
 }
 
 //******************************************************************************
@@ -260,7 +247,6 @@ void main()
     initTimerA1();
     initServo();
     initStrip();
-
 
     fillStrip(0x00, 0x00, 0x17);
 
@@ -305,8 +291,6 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
 
             fillStrip(0x17,0x17,0x00);
 
-            P2OUT &= ~BIT0;
-
             if (stored_byte == 0x01)
             {
                 fillStrip(0x00,0x00,0x20);
@@ -332,8 +316,6 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
             UART_SendChar((char)rx_val);
             fillStrip(0x00,0x17,0x17);
 
-            P2OUT |= BIT0;
-            __delay_cycles(100000);
         }
         TA1R = 0;
     }
@@ -351,8 +333,6 @@ void __attribute__ ((interrupt(TIMER1_A0_VECTOR))) Timer_A0_ISR (void)
 {
     // Code to handle the interrupt
     timerA1_done = true;
-//    TA1CCTL0 &= ~CCIFG;  // Clear the interrupt flag
-
 }
 
 

@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="convert"/>
+		<item key="selection" value="ModeOut0"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="modeout0"/>
+			<item value="reset = 1"/>
+			<item value="ccifg"/>
+			<item value="initServo"/>
+			<item value="ID_0"/>
+			<item value="ccie"/>
+			<item value="timerA1_done"/>
+			<item value="1200"/>
+			<item value="1200-1"/>
+			<item value="1200 -1"/>
 			<item value="convert"/>
 			<item value="convertChar"/>
-			<item value="reset = 1"/>
 			<item value="disable"/>
 			<item value="wdtifg"/>
 			<item value="rstifg"/>
-			<item value="uca0tx"/>
-			<item value="receive"/>
-			<item value="p1out"/>
-			<item value="p2"/>
-			<item value="pin2"/>
-			<item value="bit5"/>
-			<item value="bit1"/>
-			<item value="reset"/>
-			<item value="p1sel"/>
 		</list>
 		<list key="replacehistory">
 		</list>
