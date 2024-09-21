@@ -297,7 +297,7 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
     if (IFG2 & UCA0RXIFG)
     {
         uint8_t rx_val = UCA0RXBUF;     // Read the received byte (clears interrupt flag)
-
+        TA1R = 0;                       // Reset counter, we received a character
         if (reset == 1)                  //if timer is reset
         {
             stored_byte = rx_val;           // Store received byte
@@ -324,18 +324,13 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
                 fillStrip(0x20,0x20,0x20);
             }
 
-
             reset = 0;
+            P2OUT |= BIT0;
         }
         else
         {
             UART_SendChar((char)rx_val);
-            fillStrip(0x00,0x17,0x17);
-
-            P2OUT |= BIT0;
-            __delay_cycles(100000);
         }
-        TA1R = 0;
     }
 }
 
