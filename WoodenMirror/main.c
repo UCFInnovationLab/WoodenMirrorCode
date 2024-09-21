@@ -303,15 +303,11 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
             stored_byte = rx_val;           // Store received byte
             moveServo(stored_byte);              // Move the servo to the new position
 
-            fillStrip(0x17,0x17,0x00);
-
-            P2OUT &= ~BIT0;
-
-            if (stored_byte == 0x01)
+            if (stored_byte == 'A')
             {
                 fillStrip(0x00,0x00,0x20);
             }
-            else if (stored_byte == 0x02)
+            else if (stored_byte == 'B')
             {
                 fillStrip(0x20,0x00,0x00);
             }
