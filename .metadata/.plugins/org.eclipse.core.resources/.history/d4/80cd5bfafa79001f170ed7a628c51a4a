@@ -215,6 +215,32 @@ doMode01() {
 
     servoOn = false;
 
+    if (timerA1_done) {
+
+            P2OUT ^= BIT0;             // Toggle LED
+            timerA1_done=false;
+
+
+            timer++;
+            if (timer > 0 && timer < 11)
+            {
+                fillStrip(0x1D,0x00,0x00);
+            }
+            else if (timer > 10 && timer < 21)
+            {
+                fillStrip(0x1D,0x1D,0x1D); //white
+            }
+            else if (timer > 20 && timer < 31)
+            {
+                fillStrip(0x00,0x00,0x1D); //blue
+            }
+
+            if (timer > 30)
+            {
+                timer = 0;
+            }
+
+        }
 }
 
 doMode10() {

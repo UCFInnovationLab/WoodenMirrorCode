@@ -31,6 +31,9 @@ def white():
 	ser.write(b'\xFF')  # WHITE
 	time.sleep(.01)
 
+def olive():
+	time.sleep(0.1)
+
 # Function to send characters
 def send_characters(data):
     ser.write(data.encode())    # Encode the string into bytes and send it through the serial port

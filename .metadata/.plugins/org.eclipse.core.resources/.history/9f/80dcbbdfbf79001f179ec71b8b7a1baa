@@ -37,7 +37,6 @@ volatile bool timerA1_done = false;
 
 volatile int mode11Count = 0;
 
-volatile bool servoOn = true;
 void initUART()
 {
 #if UART_MODE == SMCLK_115200
@@ -192,7 +191,6 @@ doMode00() {
     P1OUT &= ~ModeOut0;
     P1OUT &= ~ModeOut1;
 
-    servoOn = true;
 
     //if timer reaches threshold, set reset true so we can capture next byte
     if (timerA1_done)
@@ -212,17 +210,12 @@ doMode01() {
     // Transfer mode to next node
     P1OUT |= ModeOut0;
     P1OUT &= ~ModeOut1;
-
-    servoOn = false;
-
 }
 
 doMode10() {
     // Transfer mode to next node
     P1OUT &= ~ModeOut0;
     P1OUT |= ModeOut1;
-
-    servoOn = true;
 }
 
 doMode11() {
@@ -230,7 +223,6 @@ doMode11() {
     P1OUT |= ModeOut0;
     P1OUT |= ModeOut1;
 
-    servoOn = true;
 
     if (timerA1_done) {
 
@@ -268,7 +260,6 @@ doMode11() {
 
 void main()
 {
-
     WDTCTL = WDTPW + WDTHOLD;                 // Stop WDT
     //    WDTCTL    = WDTPW | WDTHOLD;   // Stop watchdog timer
 
@@ -319,12 +310,9 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
         if (reset == 1)                  //if timer is reset
         {
             stored_byte = rx_val;           // Store received byte
-
-            if (servoOn) moveServo(stored_byte);              // Move the servo to the new position
+            moveServo(stored_byte);              // Move the servo to the new position
 
             fillStrip(stored_byte, stored_byte, stored_byte);
-
-
 
 //            if (stored_byte == 0x00)
 //            {

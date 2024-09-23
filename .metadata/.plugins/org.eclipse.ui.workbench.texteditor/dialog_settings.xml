@@ -8,6 +8,7 @@
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="fillStri"/>
 			<item value="doMode01"/>
 			<item value="7F"/>
 			<item value="gradual"/>
@@ -22,7 +23,6 @@
 			<item value="ID_0"/>
 			<item value="ccie"/>
 			<item value="1200"/>
-			<item value="1200-1"/>
 		</list>
 		<list key="replacehistory">
 		</list>
