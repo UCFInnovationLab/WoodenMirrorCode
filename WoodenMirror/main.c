@@ -31,6 +31,7 @@ volatile uint8_t reset = 1;
 volatile uint8_t stored_byte = 0; // Store the received byte
 volatile uint8_t i = 0;
 
+volatile uint8_t count = 0;
 volatile uint16_t timer = 0;
 volatile bool timerA1_done = false;
 
@@ -117,7 +118,7 @@ void initServo()
     TA0CCTL1  = OUTMOD_7;          // Reset/set
     TA0CCR0   = 65535;             // Period 20000, timer period
     TA0CCR1   = 4000;              // Duty-cycle 2000 (2 ms)
-    TA0CTL    = (TASSEL_2 | MC_3 | ID_2); // SMCLK, timer in up-mode, divide by 4
+    TA0CTL    = (TASSEL_2 | MC_1 | ID_2); // SMCLK, timer in up to CCR0 -mode, divide by 4
 
 
     P1DIR    |=  BIT6;             // Set P1.6 to output-direction
@@ -190,12 +191,15 @@ doMode00() {
     P1OUT &= ~ModeOut0;
     P1OUT &= ~ModeOut1;
 
-    //if timer reaches threshhold, set reset true so we can capture next byte
+
+    //if timer reaches threshold, set reset true so we can capture next byte
     if (timerA1_done)
     {
       timerA1_done = false;
       reset = 1; //true
     }
+
+
 
     // Make led follow reset
     if (reset) P2OUT |= BIT0;
@@ -219,10 +223,35 @@ doMode11() {
     P1OUT |= ModeOut0;
     P1OUT |= ModeOut1;
 
+
     if (timerA1_done) {
+
         P2OUT ^= BIT0;             // Toggle LED
         timerA1_done=false;
+
+
+        timer++;
+        if (timer > 0 && timer < 11)
+        {
+            fillStrip(0x1D,0x00,0x00);
+        }
+        else if (timer > 10 && timer < 21)
+        {
+            fillStrip(0x1D,0x1D,0x1D); //white
+        }
+        else if (timer > 20 && timer < 31)
+        {
+            fillStrip(0x00,0x00,0x1D); //blue
+        }
+
+        if (timer > 30)
+        {
+            timer = 0;
+        }
+
     }
+    moveServo(128);
+
 }
 
 //******************************************************************************
@@ -283,22 +312,24 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
             stored_byte = rx_val;           // Store received byte
             moveServo(stored_byte);              // Move the servo to the new position
 
-            if (stored_byte == 0x00)
-            {
-                fillStrip(0x20,0x00,0x00);  // red
-            }
-            else if (stored_byte == 0x01)
-            {
-                fillStrip(0x00,0x20,0x00);  // green
-            }
-            else if (stored_byte == 0x02)
-            {
-                fillStrip(0x00,0x00,0x20);  // blue
-            }
-            else if (stored_byte == 0x03)
-            {
-                fillStrip(0x20,0x20,0x20);
-            }
+            fillStrip(stored_byte, stored_byte, stored_byte);
+
+//            if (stored_byte == 0x00)
+//            {
+//                fillStrip(0x20,0x00,0x00);  // red
+//            }
+//            else if (stored_byte == 0x01)
+//            {
+//                fillStrip(0x00,0x20,0x00);  // green
+//            }
+//            else if (stored_byte == 0x02)
+//            {
+//                fillStrip(0x00,0x00,0x20);  // blue
+//            }
+//            else if (stored_byte == 0xFF)
+//            {
+//                fillStrip(0x20,0x20,0x20);
+//            }
 
             reset = 0;
         }
@@ -321,7 +352,6 @@ void __attribute__ ((interrupt(TIMER1_A0_VECTOR))) Timer_A0_ISR (void)
 {
     // Code to handle the interrupt
     timerA1_done = true;
-//    TA1CCTL0 &= ~CCIFG;  // Clear the interrupt flag
 
 }
 

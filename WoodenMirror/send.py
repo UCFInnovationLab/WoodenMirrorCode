@@ -20,11 +20,15 @@ def red():
 	time.sleep(.01)
 	
 def green():
-	ser.write(b'\x01')  # 
+	ser.write(b'\x01')  # GREEN
 	time.sleep(.01)
 
 def blue():
 	ser.write(b'\x02')  # BLUE
+	time.sleep(.01)
+      
+def white():
+	ser.write(b'\xFF')  # WHITE
 	time.sleep(.01)
 
 # Function to send characters
@@ -36,21 +40,23 @@ try:
 	while True:
 		red()
 		green()
-		blue()
+		white()
         
-		time.sleep(1);
+		time.sleep(1)
         
-		blue()
+		white()
 		red()
 		green()
         
-		time.sleep(1);
+		time.sleep(1)
         
 		green()
-		blue()
+		white()
 		red()
+
+		time.sleep(1)
+
 		
-		time.sleep(1);
 
         
 except KeyboardInterrupt:
