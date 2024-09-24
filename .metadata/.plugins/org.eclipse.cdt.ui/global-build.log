@@ -14125,3 +14125,416 @@ Finished building target: "WoodenMirror.out"
  
 
 **** Build Finished ****
+
+**** Build of configuration Debug for project WoodenMirror ****
+
+"C:\\ti\\ccs1280\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+Building file: "../main.c"
+Invoking: MSP430 Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmsp --use_hw_mpy=none --include_path="C:/ti/ccs1280/ccs/ccs_base/msp430/include" --include_path="C:/Users/Owner/Documents/GitHub/WoodenMirrorCode/WoodenMirror" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --advice:power=all --define=__MSP430G2233__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'main.obj' failed
+"../main.c", line 82: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+"../main.c", line 146: remark #1528-D: (ULP 3.1) Detected flag polling using IFG2. Recommend using an interrupt combined with enter LPMx and ISR
+"../main.c", line 151: remark #1528-D: (ULP 3.1) Detected flag polling using IFG2. Recommend using an interrupt combined with enter LPMx and ISR
+"../main.c", line 163: remark #1533-D: (ULP 6.1) Detected use of multiplication on a device that has no hardware multiplier
+"../main.c", line 179: remark #1544-D: (ULP 13.1) Detected loop counting up. Recommend loops count down as detecting zeros is easier
+"../main.c", line 179: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+"../main.c", line 185: remark #1544-D: (ULP 13.1) Detected loop counting up. Recommend loops count down as detecting zeros is easier
+"../main.c", line 188: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../main.c", line 331: error #66: expected a ";"
+"../main.c", line 335: warning #69-D: integer conversion resulted in a change of sign
+"../main.c", line 346: warning #516-D: pointless comparison of unsigned integer with a negative constant
+"../main.c", line 352: warning #69-D: integer conversion resulted in a change of sign
+"../main.c", line 358: error #29: expected an expression
+"../main.c", line 373: warning #516-D: pointless comparison of unsigned integer with a negative constant
+"../main.c", line 379: warning #69-D: integer conversion resulted in a change of sign
+"../main.c", line 331: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 333: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 339: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 355: remark #1533-D: (ULP 6.1) Detected use of multiplication on a device that has no hardware multiplier
+"../main.c", line 358: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 360: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 366: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 382: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 388: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 331: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 333: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 339: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 358: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 360: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 366: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 382: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 388: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 331: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 333: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 339: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 358: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 360: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 366: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 358: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 360: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 382: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 388: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+2 errors detected in the compilation of "../main.c".
+gmake: *** [main.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project WoodenMirror ****
+
+"C:\\ti\\ccs1280\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+Building file: "../main.c"
+Invoking: MSP430 Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmsp --use_hw_mpy=none --include_path="C:/ti/ccs1280/ccs/ccs_base/msp430/include" --include_path="C:/Users/Owner/Documents/GitHub/WoodenMirrorCode/WoodenMirror" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --advice:power=all --define=__MSP430G2233__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'main.obj' failed
+"../main.c", line 82: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+"../main.c", line 146: remark #1528-D: (ULP 3.1) Detected flag polling using IFG2. Recommend using an interrupt combined with enter LPMx and ISR
+"../main.c", line 151: remark #1528-D: (ULP 3.1) Detected flag polling using IFG2. Recommend using an interrupt combined with enter LPMx and ISR
+"../main.c", line 163: remark #1533-D: (ULP 6.1) Detected use of multiplication on a device that has no hardware multiplier
+"../main.c", line 179: remark #1544-D: (ULP 13.1) Detected loop counting up. Recommend loops count down as detecting zeros is easier
+"../main.c", line 179: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+"../main.c", line 185: remark #1544-D: (ULP 13.1) Detected loop counting up. Recommend loops count down as detecting zeros is easier
+"../main.c", line 188: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../main.c", line 335: warning #69-D: integer conversion resulted in a change of sign
+"../main.c", line 346: warning #516-D: pointless comparison of unsigned integer with a negative constant
+"../main.c", line 352: warning #69-D: integer conversion resulted in a change of sign
+"../main.c", line 358: error #29: expected an expression
+"../main.c", line 373: warning #516-D: pointless comparison of unsigned integer with a negative constant
+"../main.c", line 379: warning #69-D: integer conversion resulted in a change of sign
+"../main.c", line 331: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 333: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 339: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 355: remark #1533-D: (ULP 6.1) Detected use of multiplication on a device that has no hardware multiplier
+"../main.c", line 358: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 360: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 366: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 382: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 388: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 331: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 333: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 339: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 358: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 360: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 366: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 382: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 388: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 331: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 333: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 339: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 358: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 360: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 366: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 358: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 360: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 382: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 388: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+1 error detected in the compilation of "../main.c".
+gmake: *** [main.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project WoodenMirror ****
+
+"C:\\ti\\ccs1280\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+Building file: "../main.c"
+Invoking: MSP430 Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmsp --use_hw_mpy=none --include_path="C:/ti/ccs1280/ccs/ccs_base/msp430/include" --include_path="C:/Users/Owner/Documents/GitHub/WoodenMirrorCode/WoodenMirror" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --advice:power=all --define=__MSP430G2233__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'main.obj' failed
+"../main.c", line 82: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+"../main.c", line 146: remark #1528-D: (ULP 3.1) Detected flag polling using IFG2. Recommend using an interrupt combined with enter LPMx and ISR
+"../main.c", line 151: remark #1528-D: (ULP 3.1) Detected flag polling using IFG2. Recommend using an interrupt combined with enter LPMx and ISR
+"../main.c", line 163: remark #1533-D: (ULP 6.1) Detected use of multiplication on a device that has no hardware multiplier
+"../main.c", line 179: remark #1544-D: (ULP 13.1) Detected loop counting up. Recommend loops count down as detecting zeros is easier
+"../main.c", line 179: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+"../main.c", line 185: remark #1544-D: (ULP 13.1) Detected loop counting up. Recommend loops count down as detecting zeros is easier
+"../main.c", line 188: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../main.c", line 335: warning #69-D: integer conversion resulted in a change of sign
+"../main.c", line 346: warning #516-D: pointless comparison of unsigned integer with a negative constant
+"../main.c", line 352: warning #69-D: integer conversion resulted in a change of sign
+"../main.c", line 358: error #29: expected an expression
+"../main.c", line 373: warning #516-D: pointless comparison of unsigned integer with a negative constant
+"../main.c", line 379: warning #69-D: integer conversion resulted in a change of sign
+"../main.c", line 331: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 333: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 339: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 355: remark #1533-D: (ULP 6.1) Detected use of multiplication on a device that has no hardware multiplier
+"../main.c", line 358: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 360: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 366: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 382: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 388: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 331: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 333: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 339: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 358: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 360: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 366: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 382: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 388: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 331: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 333: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 339: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 358: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 360: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 366: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 358: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 360: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 382: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 388: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+1 error detected in the compilation of "../main.c".
+gmake: *** [main.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project WoodenMirror ****
+
+"C:\\ti\\ccs1280\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+Building file: "../main.c"
+Invoking: MSP430 Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmsp --use_hw_mpy=none --include_path="C:/ti/ccs1280/ccs/ccs_base/msp430/include" --include_path="C:/Users/Owner/Documents/GitHub/WoodenMirrorCode/WoodenMirror" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --advice:power=all --define=__MSP430G2233__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+"../main.c", line 82: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+"../main.c", line 146: remark #1528-D: (ULP 3.1) Detected flag polling using IFG2. Recommend using an interrupt combined with enter LPMx and ISR
+"../main.c", line 151: remark #1528-D: (ULP 3.1) Detected flag polling using IFG2. Recommend using an interrupt combined with enter LPMx and ISR
+"../main.c", line 163: remark #1533-D: (ULP 6.1) Detected use of multiplication on a device that has no hardware multiplier
+"../main.c", line 179: remark #1544-D: (ULP 13.1) Detected loop counting up. Recommend loops count down as detecting zeros is easier
+"../main.c", line 179: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+"../main.c", line 185: remark #1544-D: (ULP 13.1) Detected loop counting up. Recommend loops count down as detecting zeros is easier
+"../main.c", line 188: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../main.c", line 335: warning #69-D: integer conversion resulted in a change of sign
+"../main.c", line 346: warning #516-D: pointless comparison of unsigned integer with a negative constant
+"../main.c", line 352: warning #69-D: integer conversion resulted in a change of sign
+"../main.c", line 373: warning #516-D: pointless comparison of unsigned integer with a negative constant
+"../main.c", line 379: warning #69-D: integer conversion resulted in a change of sign
+"../main.c", line 331: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 333: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 339: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 355: remark #1533-D: (ULP 6.1) Detected use of multiplication on a device that has no hardware multiplier
+"../main.c", line 358: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 360: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 366: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 382: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 388: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 331: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 333: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 339: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 358: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 360: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 366: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 382: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 388: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 331: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 333: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 339: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 358: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 360: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 366: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 358: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 360: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 382: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 388: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 355 (col. 30): remark #1531-D: (ULP 5.2) Detected floating point operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 358 (col. 27): remark #1531-D: (ULP 5.2) Detected floating point operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+Finished building: "../main.c"
+ 
+Building target: "WoodenMirror.out"
+Invoking: MSP430 Linker
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmsp --use_hw_mpy=none --advice:power=all --define=__MSP430G2233__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number -z -m"WoodenMirror.map" --heap_size=80 --stack_size=80 -i"C:/ti/ccs1280/ccs/ccs_base/msp430/include" -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/lib" -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="WoodenMirror_linkInfo.xml" --use_hw_mpy=none --rom_model -o "WoodenMirror.out" "./main.obj" "./ws2812.obj" "../lnk_msp430g2233.cmd"  -llibc.a 
+<Linking>
+"../lnk_msp430g2233.cmd", line 96: error #10099-D: program will not fit into available memory, or the section contains a call site that requires a trampoline that can't be generated for this section. placement with alignment fails for section ".text" size 0x172a.  Available memory ranges:
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 3 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+   FLASH        size: 0x7de        unused: 0x7de        max hole: 0x7de     
+ 
+>> Compilation failure
+makefile:136: recipe for target 'WoodenMirror.out' failed
+error #10010: errors encountered during linking; "WoodenMirror.out" not built
+gmake[1]: *** [WoodenMirror.out] Error 1
+makefile:132: recipe for target 'all' failed
+gmake: *** [all] Error 2
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project WoodenMirror ****
+
+"C:\\ti\\ccs1280\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+Building target: "WoodenMirror.out"
+Invoking: MSP430 Linker
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmsp --use_hw_mpy=none --advice:power=all --define=__MSP430G2233__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number -z -m"WoodenMirror.map" --heap_size=80 --stack_size=80 -i"C:/ti/ccs1280/ccs/ccs_base/msp430/include" -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/lib" -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="WoodenMirror_linkInfo.xml" --use_hw_mpy=none --rom_model -o "WoodenMirror.out" "./main.obj" "./ws2812.obj" "../lnk_msp430g2233.cmd"  -llibc.a 
+<Linking>
+"../lnk_msp430g2233.cmd", line 96: error #10099-D: program will not fit into available memory, or the section contains a call site that requires a trampoline that can't be generated for this section. placement with alignment fails for section ".text" size 0x172a.  Available memory ranges:
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 3 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+   FLASH        size: 0x7de        unused: 0x7de        max hole: 0x7de     
+ 
+>> Compilation failure
+makefile:136: recipe for target 'WoodenMirror.out' failed
+error #10010: errors encountered during linking; "WoodenMirror.out" not built
+gmake[1]: *** [WoodenMirror.out] Error 1
+makefile:132: recipe for target 'all' failed
+gmake: *** [all] Error 2
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project WoodenMirror ****
+
+"C:\\ti\\ccs1280\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+Building target: "WoodenMirror.out"
+Invoking: MSP430 Linker
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmsp --use_hw_mpy=none --advice:power=all --define=__MSP430G2233__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number -z -m"WoodenMirror.map" --heap_size=80 --stack_size=80 -i"C:/ti/ccs1280/ccs/ccs_base/msp430/include" -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/lib" -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="WoodenMirror_linkInfo.xml" --use_hw_mpy=none --rom_model -o "WoodenMirror.out" "./main.obj" "./ws2812.obj" "../lnk_msp430g2233.cmd"  -llibc.a 
+<Linking>
+"../lnk_msp430g2233.cmd", line 96: error #10099-D: program will not fit into available memory, or the section contains a call site that requires a trampoline that can't be generated for this section. placement with alignment fails for section ".text" size 0x172a.  Available memory ranges:
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 3 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+   FLASH        size: 0x7de        unused: 0x7de        max hole: 0x7de     
+ 
+>> Compilation failure
+makefile:136: recipe for target 'WoodenMirror.out' failed
+error #10010: errors encountered during linking; "WoodenMirror.out" not built
+gmake[1]: *** [WoodenMirror.out] Error 1
+makefile:132: recipe for target 'all' failed
+gmake: *** [all] Error 2
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project WoodenMirror ****
+
+"C:\\ti\\ccs1280\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+Building target: "WoodenMirror.out"
+Invoking: MSP430 Linker
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmsp --use_hw_mpy=none --advice:power=all --define=__MSP430G2233__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number -z -m"WoodenMirror.map" --heap_size=80 --stack_size=80 -i"C:/ti/ccs1280/ccs/ccs_base/msp430/include" -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/lib" -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="WoodenMirror_linkInfo.xml" --use_hw_mpy=none --rom_model -o "WoodenMirror.out" "./main.obj" "./ws2812.obj" "../lnk_msp430g2233.cmd"  -llibc.a 
+<Linking>
+"../lnk_msp430g2233.cmd", line 96: error #10099-D: program will not fit into available memory, or the section contains a call site that requires a trampoline that can't be generated for this section. placement with alignment fails for section ".text" size 0x172a.  Available memory ranges:
+   FLASH        size: 0x7de        unused: 0x7de        max hole: 0x7de     
+error #10010: errors encountered during linking; "WoodenMirror.out" not built
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 3 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+ 
+>> Compilation failure
+makefile:136: recipe for target 'WoodenMirror.out' failed
+gmake[1]: *** [WoodenMirror.out] Error 1
+makefile:132: recipe for target 'all' failed
+gmake: *** [all] Error 2
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project WoodenMirror ****
+
+"C:\\ti\\ccs1280\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+Building target: "WoodenMirror.out"
+Invoking: MSP430 Linker
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmsp --use_hw_mpy=none --advice:power=all --define=__MSP430G2233__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number -z -m"WoodenMirror.map" --heap_size=80 --stack_size=80 -i"C:/ti/ccs1280/ccs/ccs_base/msp430/include" -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/lib" -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="WoodenMirror_linkInfo.xml" --use_hw_mpy=none --rom_model -o "WoodenMirror.out" "./main.obj" "./ws2812.obj" "../lnk_msp430g2233.cmd"  -llibc.a 
+<Linking>
+"../lnk_msp430g2233.cmd", line 96: error #10099-D: program will not fit into available memory, or the section contains a call site that requires a trampoline that can't be generated for this section. placement with alignment fails for section ".text" size 0x172a.  Available memory ranges:
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 3 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+   FLASH        size: 0x7de        unused: 0x7de        max hole: 0x7de     
+ 
+>> Compilation failure
+makefile:136: recipe for target 'WoodenMirror.out' failed
+error #10010: errors encountered during linking; "WoodenMirror.out" not built
+gmake[1]: *** [WoodenMirror.out] Error 1
+makefile:132: recipe for target 'all' failed
+gmake: *** [all] Error 2
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project WoodenMirror ****
+
+"C:\\ti\\ccs1280\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+Building file: "../main.c"
+Invoking: MSP430 Compiler
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmsp --use_hw_mpy=none --include_path="C:/ti/ccs1280/ccs/ccs_base/msp430/include" --include_path="C:/Users/Owner/Documents/GitHub/WoodenMirrorCode/WoodenMirror" --include_path="C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --advice:power=all --define=__MSP430G2233__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+"../main.c", line 82: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+"../main.c", line 146: remark #1528-D: (ULP 3.1) Detected flag polling using IFG2. Recommend using an interrupt combined with enter LPMx and ISR
+"../main.c", line 151: remark #1528-D: (ULP 3.1) Detected flag polling using IFG2. Recommend using an interrupt combined with enter LPMx and ISR
+"../main.c", line 163: remark #1533-D: (ULP 6.1) Detected use of multiplication on a device that has no hardware multiplier
+"../main.c", line 179: remark #1544-D: (ULP 13.1) Detected loop counting up. Recommend loops count down as detecting zeros is easier
+"../main.c", line 179: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+"../main.c", line 185: remark #1544-D: (ULP 13.1) Detected loop counting up. Recommend loops count down as detecting zeros is easier
+"../main.c", line 188: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../main.c", line 331: warning #69-D: integer conversion resulted in a change of sign
+"../main.c", line 342: warning #516-D: pointless comparison of unsigned integer with a negative constant
+"../main.c", line 348: warning #69-D: integer conversion resulted in a change of sign
+"../main.c", line 369: warning #516-D: pointless comparison of unsigned integer with a negative constant
+"../main.c", line 375: warning #69-D: integer conversion resulted in a change of sign
+"../main.c", line 327: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 329: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 335: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 351: remark #1533-D: (ULP 6.1) Detected use of multiplication on a device that has no hardware multiplier
+"../main.c", line 354: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 356: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 362: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 378: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 384: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 327: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 329: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 335: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 354: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 356: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 362: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 378: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 384: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 327: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 329: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 335: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 354: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 356: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 362: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 354: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function moveServo. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 356: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 378: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function fillStrip. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 384: remark #1538-D: (ULP 10.1) ISR USCI0RX_ISR calls function UART_SendChar. Recommend moving function call away from ISR, or inlining the function, or using pragmas
+"../main.c", line 351 (col. 30): remark #1531-D: (ULP 5.2) Detected floating point operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 354 (col. 27): remark #1531-D: (ULP 5.2) Detected floating point operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+Finished building: "../main.c"
+ 
+Building target: "WoodenMirror.out"
+Invoking: MSP430 Linker
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmsp --use_hw_mpy=none --advice:power=all --define=__MSP430G2233__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number -z -m"WoodenMirror.map" --heap_size=80 --stack_size=80 -i"C:/ti/ccs1280/ccs/ccs_base/msp430/include" -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/lib" -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="WoodenMirror_linkInfo.xml" --use_hw_mpy=none --rom_model -o "WoodenMirror.out" "./main.obj" "./ws2812.obj" "../lnk_msp430g2233.cmd"  -llibc.a 
+<Linking>
+"../lnk_msp430g2233.cmd", line 96: error #10099-D: program will not fit into available memory, or the section contains a call site that requires a trampoline that can't be generated for this section. placement with alignment fails for section ".text" size 0x171a.  Available memory ranges:
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 3 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+   FLASH        size: 0x7de        unused: 0x7de        max hole: 0x7de     
+ 
+>> Compilation failure
+makefile:136: recipe for target 'WoodenMirror.out' failed
+error #10010: errors encountered during linking; "WoodenMirror.out" not built
+gmake[1]: *** [WoodenMirror.out] Error 1
+makefile:132: recipe for target 'all' failed
+gmake: *** [all] Error 2
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project WoodenMirror ****
+
+"C:\\ti\\ccs1280\\ccs\\utils\\bin\\gmake" -k -j 8 all -O 
+ 
+Building target: "WoodenMirror.out"
+Invoking: MSP430 Linker
+"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmsp --use_hw_mpy=none --advice:power=all --define=__MSP430G2233__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number -z -m"WoodenMirror.map" --heap_size=80 --stack_size=80 -i"C:/ti/ccs1280/ccs/ccs_base/msp430/include" -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/lib" -i"C:/ti/ccs1280/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="WoodenMirror_linkInfo.xml" --use_hw_mpy=none --rom_model -o "WoodenMirror.out" "./main.obj" "./ws2812.obj" "../lnk_msp430g2233.cmd"  -llibc.a 
+<Linking>
+"../lnk_msp430g2233.cmd", line 96: error #10099-D: program will not fit into available memory, or the section contains a call site that requires a trampoline that can't be generated for this section. placement with alignment fails for section ".text" size 0x171a.  Available memory ranges:
+   FLASH        size: 0x7de        unused: 0x7de        max hole: 0x7de     
+error #10010: errors encountered during linking; "WoodenMirror.out" not built
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 3 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+ 
+>> Compilation failure
+makefile:136: recipe for target 'WoodenMirror.out' failed
+gmake[1]: *** [WoodenMirror.out] Error 1
+makefile:132: recipe for target 'all' failed
+gmake: *** [all] Error 2
+
+**** Build Finished ****

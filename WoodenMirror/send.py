@@ -31,8 +31,6 @@ def white():
 	ser.write(b'\xFF')  # WHITE
 	time.sleep(.01)
 
-def olive():
-	time.sleep(0.1)
 
 # Function to send characters
 def send_characters(data):
@@ -43,6 +41,7 @@ try:
 	while True:
 		red()
 		green()
+		blue()
 		white()
         
 		time.sleep(1)
@@ -50,12 +49,21 @@ try:
 		white()
 		red()
 		green()
+		blue()
         
 		time.sleep(1)
         
+		blue()
 		green()
 		white()
 		red()
+
+		time.sleep(1)
+
+		red()
+		blue()
+		green()
+		white()
 
 		time.sleep(1)
 
