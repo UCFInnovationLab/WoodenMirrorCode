@@ -1,3 +1,4 @@
-2024/09/06-10:35:00.990 974 Reusing MANIFEST C:\Users\Owner\Documents\GitHub\WoodenMirrorCode\.jxbrowser.userdata\Default\shared_proto_db\metadata/MANIFEST-000001
-2024/09/06-10:35:00.990 974 Recovering log #3
-2024/09/06-10:35:00.990 974 Reusing old log C:\Users\Owner\Documents\GitHub\WoodenMirrorCode\.jxbrowser.userdata\Default\shared_proto_db\metadata/000003.log 
+2024/09/24-14:33:08.862 9f0 Creating DB C:\Users\Owner\Documents\GitHub\WoodenMirrorCode\.jxbrowser.userdata\Default\shared_proto_db\metadata since it was missing.
+2024/09/24-14:33:08.869 9f0 Reusing MANIFEST C:\Users\Owner\Documents\GitHub\WoodenMirrorCode\.jxbrowser.userdata\Default\shared_proto_db\metadata/MANIFEST-000001
+2024/09/24-14:33:08.877 9f0 Recovering log #3
+2024/09/24-14:33:08.878 9f0 Reusing old log C:\Users\Owner\Documents\GitHub\WoodenMirrorCode\.jxbrowser.userdata\Default\shared_proto_db\metadata/000003.log 

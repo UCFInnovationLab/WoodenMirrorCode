@@ -27,7 +27,7 @@
 #define RESET_TIMEOUT 32768     // Timeout value for resetting (1 second at 32kHz ACLK)
 
 volatile uint8_t mode = 0;
-volatile uint8_t needColor = 0;
+volatile int needColor = 0;
 volatile uint8_t stored_byte = 0; // Store the received byte
 volatile uint8_t i = 0;
 
@@ -268,7 +268,6 @@ void main()
 {
 
     WDTCTL = WDTPW + WDTHOLD;                 // Stop WDT
-    //    WDTCTL    = WDTPW | WDTHOLD;   // Stop watchdog timer
 
     initClock();
     initGPIO();
@@ -348,10 +347,10 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
                     needColor = -1;
                 }
 
-                float gray = colors[0] * 0.299 + colors[1] * 0.587 + colors[2] * 0.114;
+                int grayscale = (77 * colors[0] + 150 * colors[1] + 29 * colors[2]) >> 8;
 
 
-                moveServo((int)gray);              // Move the servo to the new position
+                moveServo(grayscale);              // Move the servo to the new position
 
                 fillStrip(colors[0], colors[1], colors[2]);
 
