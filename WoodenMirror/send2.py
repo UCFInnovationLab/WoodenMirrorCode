@@ -46,13 +46,37 @@ def white():
 	time.sleep(.01)
 	ser.write(b'\x30')  
 	time.sleep(.01)
-	
+
+def black():
+	ser.write(b'\x00')
+	time.sleep(.01)
+	ser.write(b'\x00')  
+	time.sleep(.01)
+	ser.write(b'\x00')  
+	time.sleep(.01)
+
+def middleServo():
+	ser.write(b'\x80')
+	time.sleep(.01)
+	ser.write(b'\x80')  
+	time.sleep(.01)
+	ser.write(b'\x80')  
+	time.sleep(.01)
+
 def debugLED():
 	ser.write(b'\xff')
 	time.sleep(.01)
 	ser.write(b'\xff')  
 	time.sleep(.01)
 	ser.write(b'\xff')  
+	time.sleep(.01)
+
+def enableMotor():
+	ser.write(b'\xff')
+	time.sleep(.01)
+	ser.write(b'\xff')  
+	time.sleep(.01)
+	ser.write(b'\xfe')  
 	time.sleep(.01)
 
 
@@ -63,42 +87,35 @@ def send_characters(data):
 
 try:
 	while True:
-		red()
-		green()
-		blue()
-		white()
-        
-		time.sleep(1)
-        
-		white()
-		red()
-		green()
-		blue()
-        
-		time.sleep(1)
-        
-		blue()
-		white()
-		red()
-		green()
 
-
-		time.sleep(1)
-
-		green()
-		blue()
-		white()
-		red()
 		
-		time.sleep(5)
-		
-		debugLED();
-		debugLED();
-		debugLED();
-		debugLED();
-		
-		time.sleep(1)
+		red()
 
+		green()
+
+		blue()
+
+		time.sleep(1)
+		# middleServo()
+
+		# for i in range (3):
+		# 	black()
+        
+        
+				
+		# debugLED()
+		# debugLED()
+		# debugLED()
+		# debugLED()
+		
+		# time.sleep(1)
+
+		# enableMotor()
+		# enableMotor()
+		# enableMotor()
+		# enableMotor()
+
+		# time.sleep(1)
 		
 
         
