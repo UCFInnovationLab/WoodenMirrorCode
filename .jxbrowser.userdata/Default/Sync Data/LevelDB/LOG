@@ -1,3 +1,4 @@
-2024/09/06-10:35:00.971 974 Reusing MANIFEST C:\Users\Owner\Documents\GitHub\WoodenMirrorCode\.jxbrowser.userdata\Default\Sync Data\LevelDB/MANIFEST-000001
-2024/09/06-10:35:00.972 974 Recovering log #3
-2024/09/06-10:35:00.972 974 Reusing old log C:\Users\Owner\Documents\GitHub\WoodenMirrorCode\.jxbrowser.userdata\Default\Sync Data\LevelDB/000003.log 
+2024/09/24-14:33:08.816 d08 Creating DB C:\Users\Owner\Documents\GitHub\WoodenMirrorCode\.jxbrowser.userdata\Default\Sync Data\LevelDB since it was missing.
+2024/09/24-14:33:08.839 d08 Reusing MANIFEST C:\Users\Owner\Documents\GitHub\WoodenMirrorCode\.jxbrowser.userdata\Default\Sync Data\LevelDB/MANIFEST-000001
+2024/09/24-14:33:08.862 d08 Recovering log #3
+2024/09/24-14:33:08.866 d08 Reusing old log C:\Users\Owner\Documents\GitHub\WoodenMirrorCode\.jxbrowser.userdata\Default\Sync Data\LevelDB/000003.log 

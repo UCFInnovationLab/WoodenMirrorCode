@@ -28,7 +28,7 @@
 
 volatile uint8_t mode = 0;
 volatile int mode11Count = 0;
-
+volatile int needColor = 0;
 volatile uint8_t stored_byte = 0; // Store the received byte
 volatile uint8_t i = 0;
 
@@ -272,7 +272,6 @@ void main()
 {
 
     WDTCTL = WDTPW + WDTHOLD;                 // Stop WDT
-    //    WDTCTL    = WDTPW | WDTHOLD;   // Stop watchdog timer
 
     initClock();
     initGPIO();

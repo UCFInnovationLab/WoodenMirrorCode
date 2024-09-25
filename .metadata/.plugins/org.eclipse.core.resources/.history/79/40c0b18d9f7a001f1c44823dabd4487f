@@ -1,0 +1,137 @@
+#include <msp430.h>
+#include <stdint.h>
+#include <stdbool.h>
+
+// Define the UART modes
+#define SMCLK_115200     0
+#define SMCLK_9600       1
+#define UART_MODE        SMCLK_115200
+
+// Servo position constants
+#define SERVO_MIN_POS 4000
+#define SERVO_MAX_POS 8000
+
+// Define operating modes
+#define MODE_00 0
+#define MODE_01 1
+#define MODE_02 2
+
+volatile uint8_t mode = MODE_00; // Current operating mode
+volatile bool timerA1_done = false; // Timer flag for timeouts
+
+void initUART() {
+    UCA0CTL1 |= UCSSEL_2; // SMCLK
+    UCA0BR0 = (UART_MODE == SMCLK_115200) ? 138 : 104; // Baud rate based on selected mode
+    UCA0BR1 = 0;
+    UCA0MCTL = UCBRS_7;
+    UCA0CTL1 &= ~UCSWRST; // Initialize USCI state machine
+    IE2 |= UCA0RXIE;      // Enable USCI_A0 RX interrupt
+}
+
+void initClock() {
+    if (CALBC1_16MHZ == 0xFF) while(1); // Trap CPU if calibration is erased
+    BCSCTL1 = CALBC1_16MHZ;  // Set DCO to 16MHz
+    DCOCTL = CALDCO_16MHZ;
+    BCSCTL3 |= LFXT1S_2;     // Set ACLK = VLOCLK (12kHz)
+}
+
+void initGPIO() {
+    P1SEL = BIT1 + BIT2;     // P1.1 = RXD, P1.2=TXD
+    P1SEL2 = BIT1 + BIT2;
+    P1DIR |= BIT6;           // Servo control on P1.6
+    P1SEL |= BIT6;
+}
+
+void initServo() {
+    TA0CCTL1 = OUTMOD_7;    // Reset/set
+    TA0CCR0 = 65535;        // Period
+    TA0CCR1 = SERVO_MIN_POS; // Default position
+    TA0CTL = TASSEL_2 | MC_1 | ID_2; // SMCLK, up mode
+}
+
+void initTimerA1() {
+    TA1CTL = TASSEL_1 | MC_1 | TACLR;  // ACLK, Up mode
+    TA1CCR0 = 1200 - 1;                // Set for timeout (12kHz ACLK)
+    TA1CCTL0 = CCIE;                   // Enable interrupt for CCR0
+}
+
+void moveServo(uint8_t data) {
+    // Convert input byte to servo position (range 4000 to 8000)
+    TA0CCR1 = SERVO_MIN_POS + (data * (SERVO_MAX_POS - SERVO_MIN_POS) / 255);
+}
+
+void handleMode00(uint8_t data) {
+    // Handle mode 00: Move servo based on received UART data
+    moveServo(data);
+}
+
+void handleMode01() {
+    // Handle mode 01: Reset servo to the middle position
+    moveServo(128); // 128 is the middle of the byte range
+}
+
+void handleMode02() {
+    // Handle mode 02: Timeout to default position or other functionality
+    if (timerA1_done) {
+        timerA1_done = false;
+        moveServo(128); // Reset to the middle on timeout
+    }
+}
+
+void processMode(uint8_t rx_val) {
+    switch (mode) {
+        case MODE_00:
+            handleMode00(rx_val); // Servo control by UART input
+            break;
+        case MODE_01:
+            handleMode01();       // Servo to middle position
+            break;
+        case MODE_02:
+            handleMode02();       // Timeout-based servo control
+            break;
+        default:
+            // Default case to handle unexpected modes
+            break;
+    }
+}
+
+void main() {
+    WDTCTL = WDTPW + WDTHOLD; // Stop watchdog timer
+
+    initClock();
+    initGPIO();
+    initUART();
+    initServo();
+    initTimerA1();
+
+    __bis_SR_register(GIE); // Enable interrupts
+
+    while (1) {
+        if (timerA1_done) { // Timeout handling for mode 02
+            handleMode02();
+        }
+    }
+}
+
+// UART RX Interrupt
+#pragma vector=USCIAB0RX_VECTOR
+__interrupt void USCI0RX_ISR(void) {
+    uint8_t rx_val = UCA0RXBUF; // Read received byte
+
+    // Switch between modes with specific byte values (example: 250 to change mode)
+    if (rx_val == 250) {
+        mode = MODE_00; // Switch to mode 00
+    } else if (rx_val == 251) {
+        mode = MODE_01; // Switch to mode 01
+    } else if (rx_val == 252) {
+        mode = MODE_02; // Switch to mode 02
+    } else {
+        processMode(rx_val); // Process the received data according to the current mode
+    }
+}
+
+// Timer1_A0 interrupt service routine
+#pragma vector=TIMER1_A0_VECTOR
+__interrupt void Timer_A0_ISR(void) {
+    timerA1_done = true; // Set timer flag
+}

@@ -1,3 +1,4 @@
-2024/09/06-10:35:00.967 1b1c Reusing MANIFEST C:\Users\Owner\Documents\GitHub\WoodenMirrorCode\.jxbrowser.userdata\Default\Site Characteristics Database/MANIFEST-000001
-2024/09/06-10:35:00.967 1b1c Recovering log #3
-2024/09/06-10:35:00.967 1b1c Reusing old log C:\Users\Owner\Documents\GitHub\WoodenMirrorCode\.jxbrowser.userdata\Default\Site Characteristics Database/000003.log 
+2024/09/24-14:33:08.813 344c Creating DB C:\Users\Owner\Documents\GitHub\WoodenMirrorCode\.jxbrowser.userdata\Default\Site Characteristics Database since it was missing.
+2024/09/24-14:33:08.857 344c Reusing MANIFEST C:\Users\Owner\Documents\GitHub\WoodenMirrorCode\.jxbrowser.userdata\Default\Site Characteristics Database/MANIFEST-000001
+2024/09/24-14:33:08.876 344c Recovering log #3
+2024/09/24-14:33:08.877 344c Reusing old log C:\Users\Owner\Documents\GitHub\WoodenMirrorCode\.jxbrowser.userdata\Default\Site Characteristics Database/000003.log 
