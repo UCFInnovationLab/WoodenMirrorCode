@@ -41,7 +41,8 @@ volatile bool colorsAvailable = false;
 
 volatile int colors[3];
 
-int x;
+volatile bool ledEnable = false;
+volatile bool motorEnable = false;
 
 void initUART()
 {
@@ -101,7 +102,7 @@ void initGPIO()
     P1SEL2 = BIT1 + BIT2;
 
     P2DIR |= BIT0;              // Red LED: P2.0, output
-    P2OUT &= ~BIT0;             // Set P2.0 to low (0V) to turn on the LED
+    P2OUT |= BIT0;             // Set P2.0 to low (0V) to turn on the LED
 
     P1DIR |= BIT4;              // ModeOut0: P1.4, output
     P1OUT &= ~BIT4;
@@ -175,22 +176,6 @@ void moveServo(uint8_t data)
     TA0CCR1 = servoPos;
 }
 
-void delay(void)
-{
-    volatile unsigned int i;
-    for (i = 0; i < 16000; i++);  // Adjust value for desired blink rate
-}
-
-
-void gradualFill(u_int n, u_char r, u_char g, u_char b){
-    int i;
-    for (i = 0; i < n; i++){        // n is number of LEDs
-        setLEDColor(i, r, g, b);
-        showStrip();
-        _delay_cycles(1000000);       // lazy delay
-    }
-}
-
 void initialModeSetup()
 {
     // Transfer mode to next node
@@ -206,56 +191,57 @@ void initialModeSetup()
     }
 }
 
+debugLED() {
+    // Make led follow reset, LED on during captureColors
+    if (ledEnable) {
+        if (captureColors) P2OUT &= ~BIT0;
+        else P2OUT |= BIT0;
+    }
+}
+
 // Mode00: Receive single byte, move servo, light RGB with gray scale
-doMode00() {
+void doMode00() {
     initialModeSetup();
 
     if (colorsAvailable) {
         colorsAvailable=false;
-        moveServo(colors[0]);              // Move the servo to the new position
-        fillStrip(colors[0], colors[0], colors[0]);     // send out intensity
+        if (colors[0]==0xff) motorEnable==true;
+        else if (colors[0]==0xfe) motorEnable==false;
+        if (motorEnable) moveServo(colors[0]);
+        fillStrip(colors[0], colors[0], colors[0]);
     }
 
-    // Make led follow reset, LED on during captureColors
-    if (captureColors) P2OUT &= ~BIT0;
-    else P2OUT |= BIT0;
+    debugLED();
 }
 
 // Mode01: RGB colors, move servos
-doMode01() {
+void doMode01() {
     initialModeSetup();
 
     if (colorsAvailable) {
         colorsAvailable=false;
         int grayscale = (77 * colors[0] + 150 * colors[1] + 29 * colors[2]) >> 8;
-        moveServo(grayscale);                           // Move the servo to the new position
-        fillStrip(colors[0], colors[1], colors[2]);     // send out RGB
+        if ((colors[0]==0xff) && (colors[1]==0xff) && (colors[2]==0xff)) ledEnable=true;
+        if ((colors[0]==0xff) && (colors[1]==0xff) && (colors[2]==0xfe)) motorEnable=true;
+        if ((colors[0]==0xff) && (colors[1]==0xff) && (colors[2]==0xfd)) motorEnable=false;
+        if (motorEnable==true) {
+            moveServo(grayscale);
+        }
+        fillStrip(colors[0], colors[1], colors[2]);
     }
 
-    // Make led follow reset, LED on during captureColors
-    if (captureColors) P2OUT &= ~BIT0;
-    else P2OUT |= BIT0;
+    debugLED();
 }
 
 // Mode10: RGB colors, don't move servos
-doMode10() {
-    initialModeSetup();
-
-    if (colorsAvailable) {
-        colorsAvailable=false;
-        fillStrip(colors[0], colors[1], colors[2]);     // send out RGB
-    }
-
-    // Make led follow reset, LED on during captureColors
-    if (captureColors) P2OUT &= ~BIT0;
-    else P2OUT |= BIT0;
-
+void doMode10() {
+    P1OUT=10;
 }
 
 // Mode11:  blink RED, WHITE, BLUE
 //          blink red
 //          center servo
-doMode11() { //calibration
+void doMode11() { //calibration
     // Transfer mode to next node
     P1OUT |= ModeOut0;
     P1OUT |= ModeOut1;
@@ -264,7 +250,6 @@ doMode11() { //calibration
     if (timerA1_done) {
 
         P2OUT ^= BIT0;             // Toggle LED
-        x = P2OUT;
         timerA1_done=false;
 
         timer++;
@@ -371,7 +356,7 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
         }
         // mode1: RGB colors, move servos
         // mode2: RGB colors, don't move servos
-        else if ((mode == 1) || (mode == 2))
+        else if ((mode == 1))
         {
             if (captureColors)
             {
@@ -380,12 +365,14 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
                     captureColors = false;
                     colorsAvailable = true;
                 }
-
             }
             else
             {
                 UART_SendChar((char)rx_val);
             }
+        }
+        else if (mode == 2)
+        {
         }
         else if (mode == 3)
         {

@@ -46,6 +46,14 @@ def white():
 	time.sleep(.01)
 	ser.write(b'\x30')  
 	time.sleep(.01)
+	
+def debugLED():
+	ser.write(b'\xff')
+	time.sleep(.01)
+	ser.write(b'\xff')  
+	time.sleep(.01)
+	ser.write(b'\xff')  
+	time.sleep(.01)
 
 
 # Function to send characters
@@ -81,6 +89,13 @@ try:
 		blue()
 		white()
 		red()
+		
+		time.sleep(5)
+		
+		debugLED();
+		debugLED();
+		debugLED();
+		debugLED();
 		
 		time.sleep(1)
 
