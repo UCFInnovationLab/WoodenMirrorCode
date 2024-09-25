@@ -29,7 +29,6 @@
 volatile uint8_t mode = 0;
 volatile int mode11Count = 0;
 volatile int needColor = 0;
-volatile uint8_t stored_byte = 0; // Store the received byte
 volatile uint8_t i = 0;
 
 volatile uint8_t count = 0;
@@ -37,11 +36,13 @@ volatile uint16_t timer = 0;
 volatile bool timerA1_done = false;
 
 volatile unsigned int currentColorIndex = 0;
-volatile bool captureColors;
+volatile bool captureColors = true;
+volatile bool colorsAvailable = false;
 
 volatile int colors[3];
 
-volatile bool servoOn = true;
+int x;
+
 void initUART()
 {
 #if UART_MODE == SMCLK_115200
@@ -158,20 +159,19 @@ char UART_ReceiveChar(void) {
  so 1000/0.25 is a count of 4000 so we need counts from 4000 to 8000.
  given a byte input of 256 values we need 256 mapped to range of 4000 so 4000/256=15.6
  and add 4000 for the start */
-int convertCharToServoPos(char data) //    62.5 + 8000
+int convertCharToServoPos(uint8_t data)
 {
-    int asciiCode = (int)data;
+    int servoPos;
+    servoPos = (data * 15) + 4000;      // 15.6 rounded to 15
 
-    asciiCode = (asciiCode * 15) + 4000;
-
-    return asciiCode;
+    return servoPos;
 }
 
 void moveServo(uint8_t data)
 {
     int servoPos;
 
-    servoPos = convertCharToServoPos((char)data);
+    servoPos = convertCharToServoPos(data);
     TA0CCR1 = servoPos;
 }
 
@@ -191,43 +191,70 @@ void gradualFill(u_int n, u_char r, u_char g, u_char b){
     }
 }
 
-doMode00() {
+void initialModeSetup()
+{
     // Transfer mode to next node
     P1OUT &= ~ModeOut0;
     P1OUT &= ~ModeOut1;
-
 
     //if timer reaches threshold, set reset true so we can capture next byte
     if (timerA1_done)
     {
-      timerA1_done = false;
-      captureColors = true;
-      currentColorIndex = 0; //true
+        timerA1_done = false;
+        captureColors = true;
+        currentColorIndex = 0;
+    }
+}
+
+// Mode00: Receive single byte, move servo, light RGB with gray scale
+doMode00() {
+    initialModeSetup();
+
+    if (colorsAvailable) {
+        colorsAvailable=false;
+        moveServo(colors[0]);              // Move the servo to the new position
+        fillStrip(colors[0], colors[0], colors[0]);     // send out intensity
     }
 
-
-
-    // Make led follow reset
+    // Make led follow reset, LED on during captureColors
     if (captureColors) P2OUT &= ~BIT0;
-    else P2OUT |= BIT0; //led off during reset
-
+    else P2OUT |= BIT0;
 }
 
+// Mode01: RGB colors, move servos
 doMode01() {
-    // Transfer mode to next node
-    P1OUT |= ModeOut0;
-    P1OUT &= ~ModeOut1;
+    initialModeSetup();
 
+    if (colorsAvailable) {
+        colorsAvailable=false;
+        int grayscale = (77 * colors[0] + 150 * colors[1] + 29 * colors[2]) >> 8;
+        moveServo(grayscale);                           // Move the servo to the new position
+        fillStrip(colors[0], colors[1], colors[2]);     // send out RGB
+    }
 
+    // Make led follow reset, LED on during captureColors
+    if (captureColors) P2OUT &= ~BIT0;
+    else P2OUT |= BIT0;
 }
 
+// Mode10: RGB colors, don't move servos
 doMode10() {
-    // Transfer mode to next node
-    P1OUT &= ~ModeOut0;
-    P1OUT |= ModeOut1;
+    initialModeSetup();
+
+    if (colorsAvailable) {
+        colorsAvailable=false;
+        fillStrip(colors[0], colors[1], colors[2]);     // send out RGB
+    }
+
+    // Make led follow reset, LED on during captureColors
+    if (captureColors) P2OUT &= ~BIT0;
+    else P2OUT |= BIT0;
 
 }
 
+// Mode11:  blink RED, WHITE, BLUE
+//          blink red
+//          center servo
 doMode11() { //calibration
     // Transfer mode to next node
     P1OUT |= ModeOut0;
@@ -237,8 +264,8 @@ doMode11() { //calibration
     if (timerA1_done) {
 
         P2OUT ^= BIT0;             // Toggle LED
+        x = P2OUT;
         timerA1_done=false;
-
 
         timer++;
         if (timer > 0 && timer < 11)
@@ -287,20 +314,24 @@ void main()
 
     while(1)                     // Endless-loop (main-program)
     {
-      // Mode 00
-      if (!(P2IN & ModeIn0) && !(P2IN & ModeIn1)) {
-          doMode00();
-          mode = 0;
-      } else if (!(P2IN & ModeIn0) && (P2IN & ModeIn1)) {
-          doMode01();
-          mode = 1;
-      } else if ((P2IN & ModeIn0) && !(P2IN & ModeIn1)) {
-          doMode10();
-          mode = 2;
-      } else if ((P2IN & ModeIn0) && (P2IN & ModeIn1)) {
-          doMode11();
-          mode = 3;
-      }
+    // Mode 00
+    if (true) {
+        doMode01();
+        mode = 1;
+    } else
+    if (!(P2IN & ModeIn0) && !(P2IN & ModeIn1)) {
+      doMode00();
+      mode = 0;
+    } else if (!(P2IN & ModeIn0) && (P2IN & ModeIn1)) {
+      doMode01();
+      mode = 1;
+    } else if ((P2IN & ModeIn0) && !(P2IN & ModeIn1)) {
+      doMode10();
+      mode = 2;
+    } else if ((P2IN & ModeIn0) && (P2IN & ModeIn1)) {
+      doMode11();
+      mode = 3;
+    }
     }
 }
 
@@ -322,38 +353,34 @@ void __attribute__ ((interrupt(USCIAB0RX_VECTOR))) USCI0RX_ISR (void)
     {
         uint8_t rx_val = UCA0RXBUF;     // Read the received byte (clears interrupt flag)
         TA1R = 0;                       // Reset counter, we received a character
+
+        // Simple 8-bit grayscale values, move servos
         if (mode == 0)
         {
             // Should we capture this byte?
             if (captureColors)
             {
-                stored_byte = rx_val;           // store received byte
+                colors[0] = rx_val;           // store received byte
                 captureColors = false;          // done capturing
+                colorsAvailable = true;
             }
             else
             {
                 UART_SendChar((char)rx_val);
             }
         }
-        else if (mode == 1)
+        // mode1: RGB colors, move servos
+        // mode2: RGB colors, don't move servos
+        else if ((mode == 1) || (mode == 2))
         {
             if (captureColors)
             {
                 colors[currentColorIndex++] = rx_val;     // store received byte
-                if(currentColorIndex == 3) captureColors = false;
-            }
-            else
-            {
-                UART_SendChar((char)rx_val);
-            }
-        }
-        else if (mode == 2)
-        {
-            if (captureColors)
-            {
-                colors[currentColorIndex++] = rx_val;     // Store received byte
+                if(currentColorIndex == 3) {
+                    captureColors = false;
+                    colorsAvailable = true;
+                }
 
-                if(currentColorIndex == 3) captureColors = false;
             }
             else
             {
@@ -380,87 +407,6 @@ void __attribute__ ((interrupt(TIMER1_A0_VECTOR))) Timer_A0_ISR (void)
     timerA1_done = true;
 
 }
-
-
-
-//
-//if (IFG2 & UCA0RXIFG)
-// {
-//     if (mode == 0)
-//     {
-//         uint8_t rx_val = UCA0RXBUF;     // Read the received byte (clears interrupt flag)
-//         TA1R = 0;                       // Reset counter, we received a character
-//         if (currentColorIndex == 0)                  //if timer is reset
-//         {
-//             stored_byte = rx_val;           // Store received byte
-//
-//             moveServo(stored_byte);              // Move the servo to the new position
-//
-//             fillStrip(stored_byte, stored_byte, stored_byte);
-//
-//             currentColorIndex = -1;
-//         }
-//         else
-//         {
-//             UART_SendChar((char)rx_val);
-//         }
-//     }
-//     else if (mode == 1)
-//     {
-//         uint8_t rx_val = UCA0RXBUF;     // Read the received byte (clears interrupt flag)
-//         TA1R = 0;                       // Reset counter, we received a character
-//         if (currentColorIndex != -1)                  //if timer is reset
-//         {
-//             colors[currentColorIndex++] = rx_val;           // Store received byte
-//
-//             if(currentColorIndex == 3)
-//             {
-//                 currentColorIndex = -1;
-//             }
-//
-//             float gray = colors[0] * 0.299 + colors[1] * 0.587 + colors[2] * 0.114;
-//
-//
-//             moveServo((int)gray);              // Move the servo to the new position
-//
-//             fillStrip(colors[0], colors[1], colors[2]);
-//
-//             currentColorIndex = 0;
-//         }
-//         else
-//         {
-//             UART_SendChar((char)rx_val);
-//         }
-//     }
-//     else if (mode == 2)
-//     {
-//         uint8_t rx_val = UCA0RXBUF;     // Read the received byte (clears interrupt flag)
-//         TA1R = 0;                       // Reset counter, we received a character
-//         if (currentColorIndex != -1)                  //if timer is reset
-//         {
-//             colors[currentColorIndex++] = rx_val;           // Store received byte
-//
-//             if(currentColorIndex == 3)
-//             {
-//                 currentColorIndex = -1;
-//             }
-//
-//             fillStrip(colors[0], colors[1], colors[2]);
-//
-//             currentColorIndex = 0;
-//         }
-//         else
-//         {
-//             UART_SendChar((char)rx_val);
-//         }
-//     }
-//     else if (mode == 3)
-//     {
-//         uint8_t rx_val = UCA0RXBUF;
-//         TA1R = 0;
-//     }
-
-
 
 
 
