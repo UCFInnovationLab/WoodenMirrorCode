@@ -300,10 +300,10 @@ void main()
     while(1)                     // Endless-loop (main-program)
     {
     // Mode 00
-    if (true) {
-        doMode01();
-        mode = 1;
-    } else
+//    if (true) {
+//        doMode01();
+//        mode = 1;
+//    } else
     if (!(P2IN & ModeIn0) && !(P2IN & ModeIn1)) {
       doMode00();
       mode = 0;
